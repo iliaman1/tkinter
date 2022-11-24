@@ -1,7 +1,19 @@
 import tkinter as tk
+from math import pow, log
 
 
-class Block(tk.Tk):
+class Color:
+    RED = 'red'
+    WHITE = 'white'
+    BLACK = 'black'
+
+
+class Error:
+    ZERO_DIVISION = 'Stop zero division blyat!!'
+    WRONG_NUMBER = 'Incorrect numer/s beach!!'
+
+
+class Calculator(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('simple calculator')
@@ -13,8 +25,10 @@ class Block(tk.Tk):
         self.but_sub = tk.Button(text="-", font=("Helvetica", 15, "bold"), command=self.sub)
         self.but_mul = tk.Button(text="*", font=("Helvetica", 15, "bold"), command=self.mul)
         self.but_div = tk.Button(text="/", font=("Helvetica", 15, "bold"), command=self.div)
+        self.but_pow = tk.Button(text="pow", font=("Helvetica", 15, "bold"), command=self.pow)
+        self.but_log = tk.Button(text="log", font=("Helvetica", 15, "bold"), command=self.log)
         self.but_cls = tk.Button(text="clear", font=("Helvetica", 15, "bold"), command=self.clear)
-        self.lab = tk.Label(width=20, font=("Helvetica", 15, "bold"), bg='black', fg='white')
+        self.lab = tk.Label(width=20, font=("Helvetica", 15, "bold"), bg=Color.BLACK, fg=Color.WHITE)
 
         self.ent.pack(fill='both', expand=True)
         self.ent2.pack(fill='both', expand=True)
@@ -22,39 +36,49 @@ class Block(tk.Tk):
         self.but_sub.pack(fill='both', expand=True)
         self.but_mul.pack(fill='both', expand=True)
         self.but_div.pack(fill='both', expand=True)
+        self.but_pow.pack(fill='both', expand=True)
+        self.but_log.pack(fill='both', expand=True)
         self.but_cls.pack(fill='both', expand=True)
         self.lab.pack(fill='both', expand=True)
 
-    def get_numbas(self):
+    def get_numbas(self) -> tuple[float, float]:  # optional
         try:
             first_numba = float(self.ent.get())
             second_numba = float(self.ent2.get())
-        except:
-            self.lab['foreground'] = 'red'
-            self.lab['text'] = 'ОШИБКА'
+        except ValueError:
+            self.lab['foreground'] = Color.RED
+            self.lab['text'] = Error.WRONG_NUMBER
         else:
-            self.lab['foreground'] = 'white'
+            self.lab['foreground'] = Color.WHITE
             return first_numba, second_numba
 
     def add(self):
-        if self.get_numbas():
-            self.lab['text'] = str(self.get_numbas()[0] + self.get_numbas()[1])
+        if number := self.get_numbas():
+            self.lab['text'] = str(number[0] + number[1])
 
     def sub(self):
-        if self.get_numbas():
-            self.lab['text'] = str(self.get_numbas()[0] - self.get_numbas()[1])
+        if number := self.get_numbas():
+            self.lab['text'] = str(number[0] - number[1])
 
     def mul(self):
-        if self.get_numbas():
-            self.lab['text'] = str(self.get_numbas()[0] * self.get_numbas()[1])
+        if number := self.get_numbas():
+            self.lab['text'] = str(number[0] * number[1])
 
     def div(self):
-        if self.get_numbas():
+        if number := self.get_numbas():
             try:
-                self.lab['text'] = str(self.get_numbas()[0] / self.get_numbas()[1])
+                self.lab['text'] = str(number[0] / number[1])
             except ZeroDivisionError:
-                self.lab['foreground'] = 'red'
-                self.lab['text'] = 'ОШИБКА ДЕЛЕНИЕ НА НОЛЬ!!'
+                self.lab['foreground'] = Color.RED
+                self.lab['text'] = Error.ZERO_DIVISION
+
+    def pow(self):
+        if number := self.get_numbas():
+            self.lab['text'] = str(pow(number[0], number[1]))
+
+    def log(self):
+        if number := self.get_numbas():
+            self.lab['text'] = str(log(number[0], number[1]))
 
     def clear(self):
         self.ent.delete("0", tk.END)
@@ -62,6 +86,6 @@ class Block(tk.Tk):
 
 
 if __name__ == '__main__':
-    root = Block()
+    root = Calculator()
 
     root.mainloop()

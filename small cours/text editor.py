@@ -33,6 +33,7 @@ class TextEditor(tk.Tk):
             with open(f"files/{self.ent.get()}", 'r') as fp:
                 self.text_area.insert(0.0, fp.read())
         except Exception:
+            self.ent.delete(0, tk.END)
             self.ent.insert(0, "Произошла какая-то ошибка!")
 
     def save_file(self):
@@ -40,6 +41,7 @@ class TextEditor(tk.Tk):
             with open(f"files/{self.ent.get()}", 'w') as fp:
                 fp.write(self.text_area.get(0.0, 'end'))
         except Exception:
+            self.ent.delete(0, tk.END)
             self.ent.insert(0, "Произошла какая-то ошибка!")
 
 

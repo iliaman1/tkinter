@@ -29,20 +29,22 @@ class TextEditor(tk.Tk):
         self.text_area.config(yscrollcommand=self.scroll.set)
 
     def open_file(self):
-        try:
-            with open(f"files/{self.ent.get()}", 'r') as fp:
-                self.text_area.insert(0.0, fp.read())
-        except Exception:
-            self.ent.delete(0, tk.END)
-            self.ent.insert(0, "Произошла какая-то ошибка!")
+        if self.ent.get():
+            try:
+                with open(f"files/{self.ent.get()}", 'r') as fp:
+                    self.text_area.insert(0.0, fp.read())
+            except Exception:
+                self.ent.delete(0, tk.END)
+                self.ent.insert(0, "Произошла какая-то ошибка!")
 
     def save_file(self):
-        try:
-            with open(f"files/{self.ent.get()}", 'w') as fp:
-                fp.write(self.text_area.get(0.0, 'end'))
-        except Exception:
-            self.ent.delete(0, tk.END)
-            self.ent.insert(0, "Произошла какая-то ошибка!")
+        if self.ent.get():
+            try:
+                with open(f"files/{self.ent.get()}", 'w') as fp:
+                    fp.write(self.text_area.get(0.0, 'end'))
+            except Exception:
+                self.ent.delete(0, tk.END)
+                self.ent.insert(0, "Произошла какая-то ошибка!")
 
 
 if __name__ == '__main__':

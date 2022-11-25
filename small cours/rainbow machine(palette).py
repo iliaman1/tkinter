@@ -9,17 +9,44 @@ class Color:
     LIGHT_BLUE = '#ADD8E6'
     BLUE = '#0000FF'
     VIOLET = '#EE82EE'
+    BLACK = 'black'
+    WHITE = 'white'
+    GRAY = '#808080'
+
+
+class Theme:
+    name = "default"
+    geometry = '400x500'
+    font = ("Lucida Console", 20, "bold")
+    main_color = Color.VIOLET
+    label = dict(width=20, font=font, bg=Color.WHITE, fg=Color.BLACK)
+    button = dict(font=font)
+    entry = dict(width=20, font=font, bg=Color.WHITE, fg=Color.BLACK)
+    pack = dict(fill='both', expand=True)
+
+
+class DarkHorizont(Theme):
+    name = "dark horizont"
+    geometry = '500x235'
+    font = ("Helvetica", 15, "bold")
+    main_color = Color.VIOLET
+    label = dict(width=20, font=font, bg=Color.BLACK, fg=Color.GREEN)
+    button = dict(font=font)
+    entry = dict(width=20, font=font, bg=Color.BLACK, fg=Color.GREEN)
+    pack = dict(side='left', padx=10, pady=10, fill='both', expand=True)
 
 
 class Palette(tk.Tk):
-    def __init__(self):
+    def __init__(self, theme: Theme = Theme()):
         super().__init__()
-        self.title('simple palette')
-        self.geometry('400x500')
+        self.theme = theme
+        self.title('simple palette (' + self.theme.name + ')')
+        self.geometry(self.theme.geometry)
+        self.configure(bg=self.theme.main_color)
         self.iconphoto(False, tk.PhotoImage(file='img/color-palette.png'))
 
-        self.lab = tk.Label(width=20, font=("Helvetica", 15, "bold"), bg='black', fg='white')
-        self.entry = tk.Entry(width=20, font=("Helvetica", 15, "bold"))
+        self.lab = tk.Label(**self.theme.label)
+        self.entry = tk.Entry(**self.theme.entry)
         self.but_red = tk.Button(text="", font=("Helvetica", 15, "bold"), bg=Color.RED,
                                  command=lambda: self.get_color(Color.RED, 'red'))
         self.but_orange = tk.Button(text="", font=("Helvetica", 15, "bold"), bg=Color.ORANGE,
@@ -37,13 +64,13 @@ class Palette(tk.Tk):
 
         self.lab.pack(fill='both', expand=True)
         self.entry.pack(fill='both', expand=True)
-        self.but_red.pack(fill='both', expand=True)
-        self.but_orange.pack(fill='both', expand=True)
-        self.but_yellow.pack(fill='both', expand=True)
-        self.but_green.pack(fill='both', expand=True)
-        self.but_light_blue.pack(fill='both', expand=True)
-        self.but_blue.pack(fill='both', expand=True)
-        self.but_violet.pack(fill='both', expand=True)
+        self.but_red.pack(**self.theme.pack)
+        self.but_orange.pack(**self.theme.pack)
+        self.but_yellow.pack(**self.theme.pack)
+        self.but_green.pack(**self.theme.pack)
+        self.but_light_blue.pack(**self.theme.pack)
+        self.but_blue.pack(**self.theme.pack)
+        self.but_violet.pack(**self.theme.pack)
 
     def get_color(self, color_hex: str, color: str):
         self.entry.delete(0, tk.END)
@@ -53,6 +80,6 @@ class Palette(tk.Tk):
 
 
 if __name__ == '__main__':
-    root = Palette()
+    root = Palette(DarkHorizont())
 
     root.mainloop()

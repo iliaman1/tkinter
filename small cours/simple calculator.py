@@ -42,15 +42,13 @@ class Calculator(tk.Tk):
         self.lab.pack(fill='both', expand=True)
 
     def get_numbas(self) -> tuple[float, float]:  # optional
+        self.lab['foreground'] = Color.WHITE
+
         try:
-            first_numba = float(self.ent.get())
-            second_numba = float(self.ent2.get())
+            return float(self.ent.get()), float(self.ent2.get())
         except ValueError:
             self.lab['foreground'] = Color.RED
             self.lab['text'] = Error.WRONG_NUMBER
-        else:
-            self.lab['foreground'] = Color.WHITE
-            return first_numba, second_numba
 
     def add(self):
         if number := self.get_numbas():

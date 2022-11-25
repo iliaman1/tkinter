@@ -29,7 +29,7 @@ class DarkHorizont(Theme):
     name = "dark horizont"
     geometry = '500x235'
     font = ("Helvetica", 15, "bold")
-    main_color = Color.VIOLET
+    main_color = Color.GRAY
     label = dict(width=20, font=font, bg=Color.BLACK, fg=Color.GREEN)
     button = dict(font=font)
     entry = dict(width=20, font=font, bg=Color.BLACK, fg=Color.GREEN)

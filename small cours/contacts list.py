@@ -37,7 +37,7 @@ class ContactList(tk.Tk):
         self.contact1.pack(anchor=tk.W, fill='x')
         self.contact2.pack(anchor=tk.W, fill='x')
         self.contact3.pack(anchor=tk.W, fill='x')
-        self.label.pack()
+        self.label.pack(expand=1)
 
     def show_number(self):
         if self.var.get() == 0:

@@ -7,7 +7,7 @@ class SimpleShoppingCart(tk.Tk):
         super().__init__()
         self.lst_market = ['car', 'turtle', 'house', 'pupok', 'lobok', 'babina', 'stamina', 'konina', 'r9bina']
         self.title('shopping cart')
-        self.geometry('640x480')
+        self.geometry('400x200')
         self.iconphoto(False, tk.PhotoImage(file='img/shopping-cart.png'))
 
         self.market_list_frame = tk.LabelFrame(text='market')
@@ -15,9 +15,9 @@ class SimpleShoppingCart(tk.Tk):
         self.user_cart_frame = tk.LabelFrame(text='cart')
         self.market_box = tk.Listbox(self.market_list_frame, selectmode=tk.EXTENDED)
         self.user_cart_box = tk.Listbox(self.user_cart_frame, selectmode=tk.EXTENDED)
-        self.btn_add_to_card = tk.Button(self.market_options_frame, text='add to card', command=self.add_to_card)
-        self.btn_remove_from_card = tk.Button(self.market_options_frame, text='remove from card',
-                                              command=self.del_from_card)
+        self.btn_add_to_card = tk.Button(self.market_options_frame, text='add to cart', command=self.add_to_cart)
+        self.btn_remove_from_card = tk.Button(self.market_options_frame, text='remove from cart',
+                                              command=self.del_from_cart)
         self.scroll_market = tk.Scrollbar(self.market_list_frame, command=self.market_box.yview)
         self.scroll_cart = tk.Scrollbar(self.user_cart_frame, command=self.user_cart_box.yview)
 
@@ -33,11 +33,11 @@ class SimpleShoppingCart(tk.Tk):
         for item in self.lst_market:
             self.market_box.insert(tk.END, item)
 
-    def add_to_card(self):
+    def add_to_cart(self):
         for item_index in self.market_box.curselection():
-            self.user_cart_box.insert(tk.END, self.lst_market[item_index])
+            self.user_cart_box.insert(tk.END, self.market_box.get(item_index))
 
-    def del_from_card(self):
+    def del_from_cart(self):
         selected_items = list(self.user_cart_box.curselection())
         self.user_cart_box.delete(selected_items[0], selected_items[-1])
 

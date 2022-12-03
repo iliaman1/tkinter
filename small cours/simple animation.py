@@ -31,9 +31,6 @@ class MyAnimation(tk.Tk):
         if event.x != self.canva.coords(self.dog_tk)[0] or event.y != self.canva.coords(self.dog_tk)[1]:
             self.after(10, self.motion, event)
 
-    def show_current_position(self):
-        print(self.canva.coords(self.dog_tk))
-
 
 if __name__ == '__main__':
     root = MyAnimation()
